@@ -1,0 +1,50 @@
+{
+	"syslog_pipe": "/var/log/rsyslog.pipe",
+	"hosts": {
+		"cz.vpsfree/nodes/prg/node21": {
+			"alias": "node21.prg",
+			"fqdn": "node21.prg.vpsfree.cz",
+			"os": "vpsadminos"
+		},
+		"cz.vpsfree/nodes/prg/node22": {
+			"alias": "node22.prg",
+			"fqdn": "node22.prg.vpsfree.cz",
+			"os": "vpsadminos"
+		},
+		"cz.vpsfree/nodes/prg/node23": {
+			"alias": "node23.prg",
+			"fqdn": "node23.prg.vpsfree.cz",
+			"os": "vpsadminos"
+		},
+		"cz.vpsfree/nodes/prg/node24": {
+			"alias": "node24.prg",
+			"fqdn": "node24.prg.vpsfree.cz",
+			"os": "vpsadminos"
+		},
+		"cz.vpsfree/nodes/stg/node1": {
+			"alias": "node1.stg",
+			"fqdn": "node1.stg.vpsfree.cz",
+			"os": "vpsadminos"
+		},
+		"cz.vpsfree/nodes/prg/backuper": {
+			"alias": "backuper.prg",
+			"fqdn": "backuper.prg.vpsfree.cz",
+			"os": "vpsadminos"
+		},
+		"cz.vpsfree/nodes/prg/nasbox": {
+			"alias": "nasbox.prg",
+			"fqdn": "nasbox.prg.vpsfree.cz",
+			"os": "vpsadminos"
+		},
+		"cz.vpsfree/vpsadmin/int.api1": {
+			"alias": "api1.int",
+			"fqdn": "api1.int.prg.vpsfree.cz",
+			"os": "nixos"
+		},
+		"cz.vpsfree/vpsadmin/int.api2": {
+			"alias": "api2.int",
+			"fqdn": "api2.int.prg.vpsfree.cz",
+			"os": "nixos"
+		}
+	}
+}
