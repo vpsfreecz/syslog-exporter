@@ -43,7 +43,7 @@ module SyslogExporter
     # @param host [Config::Host]
     def initialize(host)
       @host = host
-      @flares = {}
+      @flares = []
       @flare_mutex = Mutex.new
       setup
     end
@@ -67,7 +67,7 @@ module SyslogExporter
 
         now = Time.now
 
-        @flares.delete_if do |name, flare|
+        @flares.delete_if do |flare|
           if now > flare.ends_at
             to_set << flare
             true
@@ -95,16 +95,29 @@ module SyslogExporter
       set_gauge(name, value, labels: labels)
 
       @flare_mutex.synchronize do
-        @flares[name] = Flare.new(
-          name,
-          labels: labels,
-          seconds: seconds,
-        )
+        existing_flare = @flares.detect { |f| f.name == name && f.labels == labels }
+
+        if existing_flare
+          existing_flare.renew(seconds)
+        else
+          @flares << Flare.new(
+            name,
+            labels: labels,
+            seconds: seconds,
+          )
+        end
       end
     end
 
     def unset_flare(name, labels: {})
-      flare = @flare_mutex.synchronize { @flares.delete(name) }
+      flare = nil
+
+      @flare_mutex.synchronize do
+        i = @flares.index { |f| f.name == name && f.labels == labels }
+        flare = @flares[i]
+        @flares.delete_at(i)
+      end
+
       return if flare.nil?
 
       set_gauge(flare.name, flare.reset_value, labels: flare.labels)

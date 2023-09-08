@@ -18,6 +18,11 @@ module SyslogExporter
       @ends_at = Time.now + seconds
     end
 
+    # @param seconds [Integer]
+    def renew(seconds)
+      @ends_at = Time.now + seconds
+    end
+
     # @return [Integer]
     def reset_value
       0
