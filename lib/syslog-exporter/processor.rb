@@ -5,7 +5,7 @@ module SyslogExporter
     def initialize(config, registry)
       @config = config
       @registry = registry
-      @io = File.open(config.syslog_pipe)
+      @io = open_pipe(config)
       @queue = Queue.new
       @hosts_collectors = {}
 
@@ -58,6 +58,13 @@ module SyslogExporter
 
         sleep(5)
       end
+    end
+
+    def open_pipe(config)
+      f = File.open(config.syslog_pipe)
+      # F_SETPIPE_SZ
+      f.fcntl(1031, config.pipe_size)
+      f
     end
   end
 end
