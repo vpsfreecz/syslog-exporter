@@ -27,6 +27,12 @@ module SyslogExporter
         docstring: '1 if kernel emergency message has been detected, 0 otherwise',
         labels: %i(type),
       )
+      add_metric(
+        registry,
+        :gauge,
+        :syslog_kernel_nf_conntrack_table_full,
+        docstring: '1 if kernel nf_conntrack table full message has been detected, 0 otherwise',
+      )
     end
 
     def setup
@@ -53,6 +59,10 @@ module SyslogExporter
       # ignore: [222090.965241] traps: dotnet[1566152] general protection fault ip:7f3ce0220611 sp:7ffe37ee4f40 error:0 in libc-2.28.so[7f3ce0220000+148000]
       elsif message.message.include?('general protection fault') && !message.message.include?('traps: ')
         set_flare(:syslog_kernel_gpf, 1, seconds: 240)
+
+      # nf_conntrack: nf_conntrack: table full, dropping packet
+      elsif message.message.include?('nf_conntrack: nf_conntrack: table full, dropping packet')
+        set_flare(:syslog_kernel_nf_conntrack_table_full, 1, seconds: 240)
       end
     end
   end
