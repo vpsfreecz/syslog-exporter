@@ -33,6 +33,12 @@ module SyslogExporter
         :syslog_kernel_nf_conntrack_table_full,
         docstring: '1 if kernel nf_conntrack table full message has been detected, 0 otherwise',
       )
+      add_metric(
+        registry,
+        :counter,
+        :syslog_kernel_oom_count,
+        docstring: 'Number of out-of-memory situations reported by the kernel',
+      )
     end
 
     def setup
@@ -63,6 +69,10 @@ module SyslogExporter
       # nf_conntrack: nf_conntrack: table full, dropping packet
       elsif message.message.include?('nf_conntrack: nf_conntrack: table full, dropping packet')
         set_flare(:syslog_kernel_nf_conntrack_table_full, 1, seconds: 240)
+
+      # apache2 invoked oom-killer: gfp_mask=0x100cca(GFP_HIGHUSER_MOVABLE), order=0, oom_score_adj=0
+      elsif message.message.include?(' invoked oom-killer: ')
+        increment_counter(:syslog_kernel_oom_count)
       end
     end
   end
