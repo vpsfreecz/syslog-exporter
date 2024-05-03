@@ -18,7 +18,7 @@ module SyslogExporter
     def <<(message)
       return if message.program != 'kernel'
 
-      if message.message.include?('PANIC: zfs:')
+      if message.message.include?('PANIC: zfs:') || message.message.include?('spl_panic+0x')
         set_flare(:syslog_zfs_panic, 1, seconds: 240)
       end
     end
