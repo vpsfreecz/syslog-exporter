@@ -31,6 +31,21 @@
 			"fqdn": "node1.stg.vpsfree.cz",
 			"os": "vpsadminos"
 		},
+		"cz.vpsfree/nodes/pgnd/node1": {
+			"alias": "node1.pgnd",
+			"fqdn": "node1.pgnd.vpsfree.cz",
+			"os": "vpsadminos"
+		},
+		"cz.vpsfree/nodes/brq/node2": {
+			"alias": "node2.brq",
+			"fqdn": "node2.brq.vpsfree.cz",
+			"os": "vpsadminos"
+		},
+		"cz.vpsfree/nodes/brq/node5": {
+			"alias": "node5.brq",
+			"fqdn": "node5.brq.vpsfree.cz",
+			"os": "vpsadminos"
+		},
 		"cz.vpsfree/nodes/prg/backuper": {
 			"alias": "backuper.prg",
 			"fqdn": "backuper.prg.vpsfree.cz",
