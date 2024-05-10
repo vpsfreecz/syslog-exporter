@@ -1,10 +1,5 @@
 {
 	"syslog_pipe": "/var/log/rsyslog.pipe",
-	"mbuffer": {
-		"enable": false,
-		"path": "/run/current-system/sw/bin/mbuffer",
-		"size": "20%"
-	},
 	"hosts": {
 		"cz.vpsfree/nodes/prg/node21": {
 			"alias": "node21.prg",

@@ -64,20 +64,7 @@ module SyslogExporter
       f = File.open(config.syslog_pipe)
       # F_SETPIPE_SZ
       f.fcntl(1031, config.pipe_size)
-      return f unless config.mbuffer.enable
-
-      f.close
-      r, w = IO.pipe
-      pid = Process.spawn(
-        config.mbuffer.path,
-        '-q',
-        '-m', config.mbuffer.size,
-        '-i', config.syslog_pipe,
-        out: w,
-      )
-
-      w.close
-      r
+      f
     end
   end
 end
