@@ -7,7 +7,7 @@ module SyslogExporter
       @io = io
     end
 
-    # @yieldparam [Message, :eof]
+    # @yieldparam [Message]
     def each_message
       it = @io.each_line
       it.next # drop the first line in case it is incomplete
@@ -22,8 +22,6 @@ module SyslogExporter
 
         yield(msg)
       end
-
-      yield(:eof)
     end
 
     protected

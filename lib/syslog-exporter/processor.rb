@@ -5,7 +5,6 @@ module SyslogExporter
     def initialize(config, registry)
       @config = config
       @registry = registry
-      @io = open_pipe(config)
       @queue = Queue.new
       @hosts_collectors = {}
 
@@ -29,14 +28,17 @@ module SyslogExporter
 
     protected
     def run_parser
-      parser = Parser.new(@io)
-      parser.each_message { |msg| @queue << msg }
+      loop do
+        parser = Parser.new(open_pipe(@config))
+        parser.each_message { |msg| @queue << msg }
+        warn 'Pipe closed, reopening'
+        sleep(1)
+      end
     end
 
     def run_processor
       loop do
         msg = @queue.pop
-        break if msg == :eof
 
         # Find a matching host, either by name or fqdn
         host = @config.hosts.each_value.detect do |h|
