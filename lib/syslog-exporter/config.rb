@@ -38,7 +38,7 @@ module SyslogExporter
 
       @syslog_pipe = data['syslog_pipe']
       @pipe_size = data.fetch('pipe_size', 1 * 1024 * 1024)
-      @hosts = Hash[data['hosts'].map do |k, v|
+      @hosts = data['hosts'].to_h do |k, v|
         h = Host.new(
           name: k,
           alias_name: v['alias'],
@@ -46,7 +46,7 @@ module SyslogExporter
           os: v['os']
         )
         [h.name, h]
-      end]
+      end
     end
   end
 end
