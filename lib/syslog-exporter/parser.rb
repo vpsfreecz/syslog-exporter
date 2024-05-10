@@ -53,16 +53,15 @@ module SyslogExporter
         svlogd_host_str, svlogd_prog_line = next_value(svlogd_host_line)
         return if svlogd_host_str.nil?
 
-        svlogd_prog_str, msg_line = next_value(svlogd_prog_line)
+        svlogd_prog_str, message = next_value(svlogd_prog_line)
         return if svlogd_prog_str.nil?
 
         host = svlogd_host_str
         program = svlogd_prog_str
-        message = msg_line
       else
         host = host_str
 
-        prog_str, msg_line = next_value(prog_line)
+        prog_str, message = next_value(prog_line)
 
         if prog_str
           if ['kernel', 'kernel[]'].include?(prog_str)
@@ -74,8 +73,6 @@ module SyslogExporter
             program = prog_str
           end
         end
-
-        message = msg_line
       end
 
       Message.new(
