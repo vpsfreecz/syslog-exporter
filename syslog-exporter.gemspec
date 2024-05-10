@@ -17,6 +17,6 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 3.1.0'
 
-  s.add_runtime_dependency 'prometheus-client', '~> 4.0.0'
-  s.add_runtime_dependency 'thin', '~> 1.8.1'
+  s.add_runtime_dependency 'prometheus-client', '~> 4.2.2'
+  s.add_runtime_dependency 'thin', '~> 1.8.2'
 end
