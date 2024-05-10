@@ -38,6 +38,9 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+Naming/FileName:
+  Exclude:
+    - lib/syslog-exporter.rb
 Naming/HeredocDelimiterNaming:
   Enabled: false
 Naming/MethodParameterName:

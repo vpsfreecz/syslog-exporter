@@ -6,7 +6,7 @@ module SyslogExporter
       @queue = Queue.new
       @hosts_collectors = {}
 
-      Collectors.each do |_, collector_class|
+      Collectors.each_value do |collector_class|
         collector_class.setup(registry)
 
         config.hosts.each do |name, host|
@@ -54,7 +54,7 @@ module SyslogExporter
     def run_flare_settler
       loop do
         @hosts_collectors.each_value do |collectors|
-          collectors.each { |c| c.settle_flares }
+          collectors.each(&:settle_flares)
         end
 
         sleep(5)

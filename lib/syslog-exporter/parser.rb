@@ -88,7 +88,7 @@ module SyslogExporter
       space = str.index(' ')
       return [nil, str] if space.nil?
 
-      [str[0..(space - 1)], str[(space + 1)..-1]]
+      [str[0..(space - 1)], str[(space + 1)..]]
     end
   end
 end
