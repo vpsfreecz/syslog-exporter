@@ -1,5 +1,3 @@
-require 'thread'
-
 module SyslogExporter
   # Base class for collectors
   class Collector
@@ -11,9 +9,7 @@ module SyslogExporter
       end
 
       # Override to register mettrics to the registry using {#add_metric}
-      def setup(registry)
-
-      end
+      def setup(registry); end
 
       # Add metric to the registry
       def add_metric(registry, metric_type, name, docstring:, labels: [])
@@ -21,18 +17,16 @@ module SyslogExporter
         @metrics[name] = registry.send(
           metric_type,
           name,
-          docstring: docstring,
-          labels: (labels + %i(alias fqdn)).uniq,
+          docstring:,
+          labels: (labels + %i[alias fqdn]).uniq
         )
       end
 
       # Return a hash of registered metrics
-      def metrics
-        @metrics
-      end
+      attr_reader :metrics
 
       # @param host [Config::Host]
-      def use_host?(host)
+      def use_host?(_host)
         true
       end
     end
@@ -48,15 +42,11 @@ module SyslogExporter
       setup
     end
 
-    def setup
-
-    end
+    def setup; end
 
     # Process syslog message
     # @param message [Message]
-    def <<(message)
-
-    end
+    def <<(message); end
 
     # Remove expired flares
     def settle_flares
@@ -83,6 +73,7 @@ module SyslogExporter
     end
 
     protected
+
     def set_gauge(name, value, labels: {})
       metrics[name].set(value, labels: labels.merge(metric_labels))
     end
@@ -92,7 +83,7 @@ module SyslogExporter
     end
 
     def set_flare(name, value, labels: {}, seconds: 120)
-      set_gauge(name, value, labels: labels)
+      set_gauge(name, value, labels:)
 
       @flare_mutex.synchronize do
         existing_flare = @flares.detect { |f| f.name == name && f.labels == labels }
@@ -102,8 +93,8 @@ module SyslogExporter
         else
           @flares << Flare.new(
             name,
-            labels: labels,
-            seconds: seconds,
+            labels:,
+            seconds:
           )
         end
       end
@@ -126,7 +117,7 @@ module SyslogExporter
     def metric_labels
       {
         alias: host.alias_name,
-        fqdn: host.fqdn,
+        fqdn: host.fqdn
       }
     end
 

@@ -7,19 +7,19 @@ module SyslogExporter
         registry,
         :gauge,
         :syslog_nodectld_crash,
-        docstring: '1 if nodectld has crashed, 0 otherwise',
+        docstring: '1 if nodectld has crashed, 0 otherwise'
       )
       add_metric(
         registry,
         :gauge,
         :syslog_nodectld_segfault,
-        docstring: '1 if nodectld has segfaulted, 0 otherwise',
+        docstring: '1 if nodectld has segfaulted, 0 otherwise'
       )
       add_metric(
         registry,
         :gauge,
         :syslog_nodectld_zfs_stream_receive_error,
-        docstring: '1 if zfs recv in nodectld has reported an error, 0 otherwise',
+        docstring: '1 if zfs recv in nodectld has reported an error, 0 otherwise'
       )
     end
 

@@ -11,15 +11,15 @@ module SyslogExporter
 
       processor = SyslogExporter::Processor.new(
         Config.new(config_file),
-        registry,
+        registry
       )
       processor.start
 
       Rack::Builder.app do
         use Rack::Deflater
-        use Prometheus::Middleware::Exporter, {registry: registry}
+        use Prometheus::Middleware::Exporter, { registry: }
 
-        run ->(_) { [200, {'Content-Type' => 'text/html'}, ['OK']] }
+        run ->(_) { [200, { 'Content-Type' => 'text/html' }, ['OK']] }
       end
     end
   end

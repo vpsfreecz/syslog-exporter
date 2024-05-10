@@ -1,5 +1,3 @@
-require 'thread'
-
 module SyslogExporter
   class Processor
     def initialize(config, registry)
@@ -27,6 +25,7 @@ module SyslogExporter
     end
 
     protected
+
     def run_parser
       loop do
         parser = Parser.new(open_pipe(@config))

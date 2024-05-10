@@ -25,6 +25,7 @@ module SyslogExporter
     end
 
     protected
+
     def parse_message(line)
       time_str, host_line = next_value(line)
       return if time_str.nil?
@@ -39,7 +40,7 @@ module SyslogExporter
       pid = nil
       message = nil
 
-      if host_str == 'localhost' && /^\d+\-\d+\-\d+_\d+ \d+\:\d+\.\d+ / =~ prog_line
+      if host_str == 'localhost' && /^\d+-\d+-\d+_\d+ \d+:\d+\.\d+ / =~ prog_line
         # Parse messages forwarded to syslog from svlogd -tt. With -tt, each log
         # message starts with date and time. We then rely on svlogd beign configured
         # to prefix each line with host fqdn and program name.
@@ -64,11 +65,11 @@ module SyslogExporter
         prog_str, msg_line = next_value(prog_line)
 
         if prog_str
-          if prog_str == 'kernel' || prog_str == 'kernel[]'
+          if ['kernel', 'kernel[]'].include?(prog_str)
             program = 'kernel'
           elsif /([^\[]+)\[(\d+)\]$/ =~ prog_str
-            program = $1
-            pid = $2.to_i
+            program = ::Regexp.last_match(1)
+            pid = ::Regexp.last_match(2).to_i
           else
             program = prog_str
           end
@@ -78,11 +79,11 @@ module SyslogExporter
       end
 
       Message.new(
-        time: time,
-        host: host,
-        program: program,
-        pid: pid,
-        message: message,
+        time:,
+        host:,
+        program:,
+        pid:,
+        message:
       )
     end
 
@@ -90,7 +91,7 @@ module SyslogExporter
       space = str.index(' ')
       return [nil, str] if space.nil?
 
-      [str[0..(space-1)], str[(space+1)..-1]]
+      [str[0..(space - 1)], str[(space + 1)..-1]]
     end
   end
 end

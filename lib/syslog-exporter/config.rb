@@ -37,13 +37,13 @@ module SyslogExporter
       data = JSON.parse(File.read(path))
 
       @syslog_pipe = data['syslog_pipe']
-      @pipe_size = data.fetch('pipe_size', 1*1024*1024)
+      @pipe_size = data.fetch('pipe_size', 1 * 1024 * 1024)
       @hosts = Hash[data['hosts'].map do |k, v|
         h = Host.new(
           name: k,
           alias_name: v['alias'],
           fqdn: v['fqdn'],
-          os: v['os'],
+          os: v['os']
         )
         [h.name, h]
       end]

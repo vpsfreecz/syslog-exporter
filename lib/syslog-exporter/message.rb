@@ -16,7 +16,7 @@ module SyslogExporter
     # @return [String]
     attr_reader :message
 
-    def initialize(time:, host:, program: nil, pid: nil, message:)
+    def initialize(time:, host:, message:, program: nil, pid: nil)
       @time = time
       @host = host
       @program = program

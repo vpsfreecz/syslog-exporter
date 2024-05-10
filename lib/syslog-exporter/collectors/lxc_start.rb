@@ -8,14 +8,14 @@ module SyslogExporter
         :gauge,
         :syslog_lxc_start_failed,
         docstring: '1 if a container has failed to start, 0 otherwise',
-        labels: %i(id),
+        labels: %i[id]
       )
       add_metric(
         registry,
         :gauge,
         :syslog_lxc_start_netns_limit,
         docstring: '1 if a container has hit netns limit and failed to start, 0 otherwise',
-        labels: %i(id),
+        labels: %i[id]
       )
     end
 
@@ -30,25 +30,26 @@ module SyslogExporter
         set_flare(
           :syslog_lxc_start_netns_limit,
           1,
-          labels: {id: get_container_id(message)},
-          seconds: 240,
+          labels: { id: get_container_id(message) },
+          seconds: 240
         )
       elsif message.message.include?('The container failed to start')
         set_flare(
           :syslog_lxc_start_failed,
           1,
-          labels: {id: get_container_id(message)},
-          seconds: 240,
+          labels: { id: get_container_id(message) },
+          seconds: 240
         )
       end
     end
 
     protected
+
     def get_container_id(message)
       colon = message.message.index(':')
       return '' if colon.nil?
 
-      message.message[0..(colon-1)].strip
+      message.message[0..(colon - 1)].strip
     end
   end
 end

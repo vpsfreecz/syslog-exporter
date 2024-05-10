@@ -7,7 +7,7 @@ module SyslogExporter
         registry,
         :gauge,
         :syslog_flare_test,
-        docstring: '1 if flare is on, 0 otherwise',
+        docstring: '1 if flare is on, 0 otherwise'
       )
     end
 
@@ -16,9 +16,9 @@ module SyslogExporter
     end
 
     def <<(message)
-      if message.message.include?('flare test')
-        set_flare(:syslog_flare_test, 1, seconds: 15)
-      end
+      return unless message.message.include?('flare test')
+
+      set_flare(:syslog_flare_test, 1, seconds: 15)
     end
   end
 end

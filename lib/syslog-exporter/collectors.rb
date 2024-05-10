@@ -5,8 +5,8 @@ module SyslogExporter
       @collectors[name] = klass
     end
 
-    def self.each(&block)
-      (@collectors || {}).each(&block)
+    def self.each(&)
+      (@collectors || {}).each(&)
     end
   end
 end
