@@ -35,6 +35,7 @@ module SyslogExporter
       host_str, prog_line = next_value(host_line)
       return if host_str.nil?
 
+      klass = Message
       host = nil
       program = nil
       pid = nil
@@ -65,6 +66,7 @@ module SyslogExporter
 
         if prog_str
           if ['kernel', 'kernel[]'].include?(prog_str)
+            klass = KernelMessage
             program = 'kernel'
           elsif /([^\[]+)\[(\d+)\]$/ =~ prog_str
             program = ::Regexp.last_match(1)
@@ -75,7 +77,7 @@ module SyslogExporter
         end
       end
 
-      Message.new(
+      klass.new(
         time:,
         host:,
         program:,

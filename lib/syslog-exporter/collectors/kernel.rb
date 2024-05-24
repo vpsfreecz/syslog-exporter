@@ -9,6 +9,13 @@ module SyslogExporter
     def self.setup(registry)
       add_metric(
         registry,
+        :counter,
+        :syslog_kernel_message_count,
+        docstring: 'Number of kernel log messages per syslog namespace',
+        labels: %i[syslogns]
+      )
+      add_metric(
+        registry,
         :gauge,
         :syslog_kernel_bug,
         docstring: '1 if kernel bug has occurred, 0 otherwise',
@@ -53,6 +60,10 @@ module SyslogExporter
 
     def <<(message)
       return if message.program != 'kernel'
+
+      increment_counter(:syslog_kernel_message_count, labels: {
+        syslogns: message.syslogns_tag
+      })
 
       if message.message.include?('BUG: kernel NULL pointer dereference')
         set_flare(:syslog_kernel_bug, 1, labels: { type: 'nullptr' }, seconds: 240)
