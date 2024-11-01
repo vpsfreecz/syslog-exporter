@@ -34,7 +34,7 @@ module SyslogExporter
           labels: { id: get_container_id(message) },
           seconds: 240
         )
-      elsif message.message.include?('The container failed to start')
+      elsif /Failed to spawn container "[^"]+"/ =~ message.message
         set_flare(
           :syslog_lxc_start_failed,
           1,
@@ -47,6 +47,9 @@ module SyslogExporter
     protected
 
     def get_container_id(message)
+      # 1234: start - ../src/lxc/start.c:do_start:1108 - No space left on device - Failed to unshare CLONE_NEWNET
+      # 1234: start - ../src/lxc/start.c:__lxc_start:2120 - Failed to spawn container "26533"
+      # where 1234 is container id
       colon = message.message.index(':')
       return '' if colon.nil?
 
