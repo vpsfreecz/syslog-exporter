@@ -24,7 +24,8 @@ module SyslogExporter
     end
 
     def <<(message)
-      return if message.program != 'lxc-start'
+      # lxc-start was there originally, since perhaps 6.0.2 it is lxc
+      return unless %w[lxc lxc-start].include?(message.program)
 
       if message.message.include?('No space left on device - Failed to unshare CLONE_NEWNET')
         set_flare(
