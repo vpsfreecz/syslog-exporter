@@ -13,7 +13,7 @@ module SyslogExporter
     protected
 
     def extract_syslogns
-      return if /^\[\s*\d+\.\d+\] \[ \s*([^ ]+) \s*\] [^$]+/ !~ message
+      return if /^\[ \s*([^ ]+) \s*\] [^$]+/ !~ message
 
       ::Regexp.last_match(1)
     end
