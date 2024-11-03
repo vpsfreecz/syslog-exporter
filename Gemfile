@@ -6,5 +6,6 @@ gemspec
 gem 'rubygems-generate_index', '~> 1.1'
 
 group :development do
+  gem 'rackup'
   gem 'rake'
 end

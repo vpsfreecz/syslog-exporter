@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'prometheus-client', '~> 4.2.2'
   s.add_dependency 'puma', '~> 6.4'
+  s.add_dependency 'rack', '~> 3.1'
 end

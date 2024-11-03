@@ -19,7 +19,7 @@ module SyslogExporter
         use Rack::Deflater
         use Prometheus::Middleware::Exporter, { registry: }
 
-        run ->(_) { [200, { 'Content-Type' => 'text/html' }, ['OK']] }
+        run { [200, { 'content-type' => 'text/html' }, ['OK']] }
       end
     end
   end
