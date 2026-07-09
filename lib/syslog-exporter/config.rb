@@ -16,11 +16,15 @@ module SyslogExporter
       # @return [String]
       attr_reader :os
 
-      def initialize(name:, alias_name:, fqdn:, os:)
+      # @return [Array<String>]
+      attr_reader :collectors
+
+      def initialize(name:, alias_name:, fqdn:, os:, collectors: [])
         @name = name
         @alias_name = alias_name
         @fqdn = fqdn
         @os = os
+        @collectors = collectors
       end
     end
 
@@ -43,7 +47,8 @@ module SyslogExporter
           name: k,
           alias_name: v['alias'],
           fqdn: v['fqdn'],
-          os: v['os']
+          os: v['os'],
+          collectors: v.fetch('collectors', [])
         )
         [h.name, h]
       end

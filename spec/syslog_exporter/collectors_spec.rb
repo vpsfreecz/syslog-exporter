@@ -103,4 +103,92 @@ RSpec.describe 'syslog collectors' do
       }
     )
   end
+
+  it 'detects vpsAdmin WebUI fatal errors reported by nginx' do
+    collector, registry = setup_collector(SyslogExporter::Collectors::VpsadminWebui, host: webui_host)
+
+    collector << message(
+      program: 'nginx',
+      message: 'FastCGI sent in stderr: "PHP message: PHP Warning: noise; ' \
+               'PHP message: PHP Fatal error:  Uncaught TypeError: broken"',
+      host: 'webui1.int.vpsfree.cz'
+    )
+
+    expect(registry.metrics.fetch(:syslog_vpsadmin_webui_fatal_error_count).increments.last).to eq(
+      labels: {
+        error_type: 'fatal',
+        alias: 'webui1.int',
+        fqdn: 'webui1.int.vpsfree.cz'
+      }
+    )
+    expect(registry.metrics.fetch(:syslog_vpsadmin_webui_fatal_error).sets.last).to eq(
+      value: 1,
+      labels: {
+        error_type: 'fatal',
+        alias: 'webui1.int',
+        fqdn: 'webui1.int.vpsfree.cz'
+      }
+    )
+  end
+
+  it 'classifies vpsAdmin WebUI parse and recoverable fatal errors' do
+    collector, registry = setup_collector(SyslogExporter::Collectors::VpsadminWebui, host: webui_host)
+
+    collector << message(
+      program: 'nginx',
+      message: 'FastCGI sent in stderr: "PHP message: PHP Parse error: syntax error"',
+      host: 'webui1.int.vpsfree.cz'
+    )
+    collector << message(
+      program: 'nginx',
+      message: 'FastCGI sent in stderr: "PHP message: PHP Recoverable fatal error: problem"',
+      host: 'webui1.int.vpsfree.cz'
+    )
+
+    expect(registry.metrics.fetch(:syslog_vpsadmin_webui_fatal_error_count).increments).to include(
+      labels: {
+        error_type: 'parse',
+        alias: 'webui1.int',
+        fqdn: 'webui1.int.vpsfree.cz'
+      }
+    )
+    expect(registry.metrics.fetch(:syslog_vpsadmin_webui_fatal_error_count).increments).to include(
+      labels: {
+        error_type: 'recoverable_fatal',
+        alias: 'webui1.int',
+        fqdn: 'webui1.int.vpsfree.cz'
+      }
+    )
+  end
+
+  it 'ignores WebUI warnings, stack traces, handled errors, and other programs' do
+    collector, registry = setup_collector(SyslogExporter::Collectors::VpsadminWebui, host: webui_host)
+
+    [
+      message(
+        program: 'nginx',
+        message: 'FastCGI sent in stderr: "PHP message: PHP Warning: Undefined array key"',
+        host: 'webui1.int.vpsfree.cz'
+      ),
+      message(program: 'nginx', message: 'Stack trace:', host: 'webui1.int.vpsfree.cz'),
+      message(
+        program: 'nginx',
+        message: 'FastCGI sent in stderr: "PHP message: HaveAPI\Client\Exception\ValidationError: invalid"',
+        host: 'webui1.int.vpsfree.cz'
+      ),
+      message(
+        program: 'php-fpm',
+        message: 'FastCGI sent in stderr: "PHP message: PHP Fatal error: bad"',
+        host: 'webui1.int.vpsfree.cz'
+      )
+    ].each { |msg| collector << msg }
+
+    expect(registry.metrics.fetch(:syslog_vpsadmin_webui_fatal_error_count).increments).to be_empty
+    expect(registry.metrics.fetch(:syslog_vpsadmin_webui_fatal_error).sets.map { |set| set[:value] }).to all(eq(0))
+  end
+
+  it 'uses the vpsAdmin WebUI collector only for configured hosts' do
+    expect(SyslogExporter::Collectors::VpsadminWebui.use_host?(webui_host)).to be(true)
+    expect(SyslogExporter::Collectors::VpsadminWebui.use_host?(default_host)).to be(false)
+  end
 end

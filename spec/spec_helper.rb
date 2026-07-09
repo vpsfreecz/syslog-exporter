@@ -65,6 +65,16 @@ module MetricHelpers
     )
   end
 
+  def webui_host
+    SyslogExporter::Config::Host.new(
+      name: 'cz.vpsfree/vpsadmin/int.webui1',
+      alias_name: 'webui1.int',
+      fqdn: 'webui1.int.vpsfree.cz',
+      os: 'nixos',
+      collectors: ['vpsadmin_webui']
+    )
+  end
+
   def message(program:, message:, host: 'node1.prg.vpsfree.cz')
     SyslogExporter::Message.new(
       time: Time.utc(2026, 7, 9, 12, 0, 0),
