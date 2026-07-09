@@ -62,7 +62,7 @@ module SyslogExporter
     end
 
     def open_pipe(config)
-      f = File.open(config.syslog_pipe)
+      f = File.new(config.syslog_pipe)
       # F_SETPIPE_SZ
       f.fcntl(1031, config.pipe_size)
       f

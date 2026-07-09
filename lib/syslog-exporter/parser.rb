@@ -9,10 +9,10 @@ module SyslogExporter
 
     # @yieldparam [Message]
     def each_message
-      it = @io.each_line
-      it.next # drop the first line in case it is incomplete
+      lines = @io.each_line
+      lines.next # drop the first line in case it is incomplete
 
-      it.each do |line|
+      lines.each do |line|
         msg = parse_message(line)
 
         if msg.nil?
