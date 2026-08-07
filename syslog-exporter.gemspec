@@ -15,9 +15,9 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.license       = 'MIT'
 
-  s.required_ruby_version = '>= 3.1.0'
+  s.required_ruby_version = '>= 3.4.0'
 
-  s.add_dependency 'prometheus-client', '~> 4.2.2'
-  s.add_dependency 'puma', '~> 6.4'
-  s.add_dependency 'rack', '~> 3.1'
+  s.add_dependency 'prometheus-client', '~> 4.2.5'
+  s.add_dependency 'puma', '~> 8.0', '>= 8.0.2'
+  s.add_dependency 'rack', '~> 3.2'
 end
