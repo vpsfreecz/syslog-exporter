@@ -1,0 +1,23 @@
+{
+  "syslog_pipe": "/nonexistent/test-fifo",
+  "hosts": {
+    "host-vps": {
+      "alias": "node\"\\\nž",
+      "fqdn": "node.example",
+      "os": "vpsadminos"
+    },
+    "host-web": {
+      "alias": "web",
+      "fqdn": "web.example",
+      "os": "nixos",
+      "collectors": [
+        "vpsadmin_webui"
+      ]
+    },
+    "host-other": {
+      "alias": "other",
+      "fqdn": "other.example",
+      "os": "nixos"
+    }
+  }
+}

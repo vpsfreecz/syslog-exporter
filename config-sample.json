@@ -1,5 +1,7 @@
 {
 	"syslog_pipe": "/var/log/rsyslog.pipe",
+	"pipe_size": 1048576,
+	"max_line_bytes": 1048576,
 	"hosts": {
 		"cz.vpsfree/nodes/prg/node21": {
 			"alias": "node21.prg",

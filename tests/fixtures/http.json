@@ -1,0 +1,19 @@
+{
+  "metrics": {
+    "content-type": "text/plain; version=0.0.4",
+    "vary": "Accept-Encoding"
+  },
+  "fallback": {
+    "status": 200,
+    "headers": {
+      "content-type": "text/html",
+      "vary": "Accept-Encoding"
+    },
+    "body": "OK"
+  },
+  "gzip": {
+    "content-type": "text/plain; version=0.0.4",
+    "vary": "Accept-Encoding",
+    "content-encoding": "gzip"
+  }
+}

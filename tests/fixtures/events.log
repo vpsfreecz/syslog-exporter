@@ -1,0 +1,27 @@
+2026-11-10T12:00:00.123456+00:00 host-vps kernel[] [ prg ] BUG: kernel NULL pointer dereference
+2026-11-10T12:00:00.123456+00:00 host-vps kernel[] unregister_netdevice: waiting for lo
+2026-11-10T12:00:00.123456+00:00 host-vps kernel[] general protection fault
+2026-11-10T12:00:00.123456+00:00 host-vps kernel[] traps: dotnet general protection fault
+2026-11-10T12:00:00.123456+00:00 host-vps kernel[] nf_conntrack: nf_conntrack: table full, dropping packet
+2026-11-10T12:00:00.123456+00:00 host-vps kernel[] [ ns ] apache invoked oom-killer: flags
+2026-11-10T12:00:00.123456+00:00 host-vps kernel[] apache invoked oom-killer: flags
+2026-11-10T12:00:00.123456+00:00 host-vps kernel[] PANIC: zfs: bad
+2026-11-10T12:00:00.123456+00:00 host-vps kernel[] spl_panic+0x00
+2026-11-10T12:00:00.123456+00:00 host-vps lxc 1234: No space left on device - Failed to unshare CLONE_NEWNET
+2026-11-10T12:00:00.123456+00:00 host-vps lxc-start 2345: Failed to spawn container "999"
+2026-11-10T12:00:00.123456+00:00 host-vps lxc Failed to spawn container "999"
+2026-11-10T12:00:00.123456+00:00 host-vps nodectld Daemon crashed
+2026-11-10T12:00:00.123456+00:00 host-vps nodectld [BUG] Segmentation fault
+2026-11-10T12:00:00.123456+00:00 host-vps nodectld cannot receive incremental stream
+2026-11-10T12:00:00.123456+00:00 host-vps osctld[123] Received command 'ct.start'
+2026-11-10T12:00:00.123456+00:00 node.example osctld Received command 'ct.stop'
+2026-11-10T12:00:00.123456+00:00 host-vps osctld Error: internal error
+2026-11-10T12:00:00.123456+00:00 host-vps other flare test
+2026-11-10T12:00:00.123456+00:00 host-web nginx FastCGI sent in stderr: PHP message: PHP Fatal error: bad
+2026-11-10T12:00:00.123456+00:00 host-web nginx FastCGI sent in stderr: PHP message: PHP Parse error: bad
+2026-11-10T12:00:00.123456+00:00 host-web nginx FastCGI sent in stderr: PHP message: PHP Recoverable fatal error: bad
+2026-11-10T12:00:00.123456+00:00 host-web nginx FastCGI sent in stderr: PHP message: PHP Warning: ignore
+2026-11-10T12:00:00.123456+00:00 host-web php-fpm FastCGI sent in stderr: PHP message: PHP Fatal error: ignore
+2026-11-10T12:00:00.123456+00:00 host-other nodectld Daemon crashed
+2026-11-10T12:00:00.123456+00:00 host-other nginx FastCGI sent in stderr: PHP message: PHP Fatal error: ignore
+2026-11-10T12:00:00.123456+00:00 unknown osctld Error: internal error

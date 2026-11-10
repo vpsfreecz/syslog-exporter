@@ -1,0 +1,3 @@
+2026-11-10T12:00:00.123456+00:00 host-vps osctld[123] Received command 'ct.start'
+2026-11-10T12:00:01+00:00 host-vps kernel [ ns ] apache invoked oom-killer: flags
+2026-11-10T12:00:02+00:00 host-web nginx unicode ž control#011value

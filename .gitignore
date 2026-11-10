@@ -1,3 +1,2 @@
-.gems
-Gemfile.lock
-pkg
+/target
+__pycache__/

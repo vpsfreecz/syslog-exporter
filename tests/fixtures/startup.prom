@@ -1,0 +1,55 @@
+# TYPE syslog_kernel_message_count counter
+# HELP syslog_kernel_message_count Number of kernel log messages per syslog namespace
+# TYPE syslog_kernel_bug gauge
+# HELP syslog_kernel_bug 1 if kernel bug has occurred, 0 otherwise
+syslog_kernel_bug{type="nullptr",alias="node\"\\\nž",fqdn="node.example"} 0.0
+syslog_kernel_bug{type="nullptr",alias="web",fqdn="web.example"} 0.0
+syslog_kernel_bug{type="nullptr",alias="other",fqdn="other.example"} 0.0
+# TYPE syslog_kernel_gpf gauge
+# HELP syslog_kernel_gpf 1 if kernel general protection fault has occurred, 0 otherwise
+# TYPE syslog_kernel_emergency gauge
+# HELP syslog_kernel_emergency 1 if kernel emergency message has been detected, 0 otherwise
+syslog_kernel_emergency{type="unregister_netdevice",alias="node\"\\\nž",fqdn="node.example"} 0.0
+syslog_kernel_emergency{type="unregister_netdevice",alias="web",fqdn="web.example"} 0.0
+syslog_kernel_emergency{type="unregister_netdevice",alias="other",fqdn="other.example"} 0.0
+# TYPE syslog_kernel_nf_conntrack_table_full gauge
+# HELP syslog_kernel_nf_conntrack_table_full 1 if kernel nf_conntrack table full message has been detected, 0 otherwise
+# TYPE syslog_kernel_oom_count counter
+# HELP syslog_kernel_oom_count Number of out-of-memory situations reported by the kernel
+# TYPE syslog_lxc_start_failed gauge
+# HELP syslog_lxc_start_failed 1 if a container has failed to start, 0 otherwise
+# TYPE syslog_lxc_start_netns_limit gauge
+# HELP syslog_lxc_start_netns_limit 1 if a container has hit netns limit and failed to start, 0 otherwise
+# TYPE syslog_message_count counter
+# HELP syslog_message_count Number of syslog messages sent by a host
+# TYPE syslog_nodectld_crash gauge
+# HELP syslog_nodectld_crash 1 if nodectld has crashed, 0 otherwise
+syslog_nodectld_crash{alias="node\"\\\nž",fqdn="node.example"} 0.0
+# TYPE syslog_nodectld_segfault gauge
+# HELP syslog_nodectld_segfault 1 if nodectld has segfaulted, 0 otherwise
+syslog_nodectld_segfault{alias="node\"\\\nž",fqdn="node.example"} 0.0
+# TYPE syslog_nodectld_zfs_stream_receive_error gauge
+# HELP syslog_nodectld_zfs_stream_receive_error 1 if zfs recv in nodectld has reported an error, 0 otherwise
+syslog_nodectld_zfs_stream_receive_error{alias="node\"\\\nž",fqdn="node.example"} 0.0
+# TYPE syslog_osctld_command_count counter
+# HELP syslog_osctld_command_count Number of executed management commands
+# TYPE syslog_osctld_internal_error gauge
+# HELP syslog_osctld_internal_error 1 if osctld internal error has occurred, 0 otherwise
+syslog_osctld_internal_error{alias="node\"\\\nž",fqdn="node.example"} 0.0
+# TYPE syslog_flare_test gauge
+# HELP syslog_flare_test 1 if flare is on, 0 otherwise
+syslog_flare_test{alias="node\"\\\nž",fqdn="node.example"} 0.0
+syslog_flare_test{alias="web",fqdn="web.example"} 0.0
+syslog_flare_test{alias="other",fqdn="other.example"} 0.0
+# TYPE syslog_vpsadmin_webui_fatal_error_count counter
+# HELP syslog_vpsadmin_webui_fatal_error_count Number of fatal vpsAdmin WebUI PHP errors reported by nginx
+# TYPE syslog_vpsadmin_webui_fatal_error gauge
+# HELP syslog_vpsadmin_webui_fatal_error 1 if a fatal vpsAdmin WebUI PHP error has occurred, 0 otherwise
+syslog_vpsadmin_webui_fatal_error{error_type="fatal",alias="web",fqdn="web.example"} 0.0
+syslog_vpsadmin_webui_fatal_error{error_type="parse",alias="web",fqdn="web.example"} 0.0
+syslog_vpsadmin_webui_fatal_error{error_type="recoverable_fatal",alias="web",fqdn="web.example"} 0.0
+# TYPE syslog_zfs_panic gauge
+# HELP syslog_zfs_panic 1 if ZFS panic has occurred, 0 otherwise
+syslog_zfs_panic{alias="node\"\\\nž",fqdn="node.example"} 0.0
+syslog_zfs_panic{alias="web",fqdn="web.example"} 0.0
+syslog_zfs_panic{alias="other",fqdn="other.example"} 0.0

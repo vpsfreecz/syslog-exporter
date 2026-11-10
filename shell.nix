@@ -1,19 +1,5 @@
 { pkgs ? import <nixpkgs> {} }:
-pkgs.mkShell rec {
+pkgs.mkShell {
   name = "syslog-exporter";
-
-  buildInputs = with pkgs; [
-    bundix
-    git
-    ruby_3_4
-    rubyPackages.rubocop
-  ];
-
-  shellHook = ''
-    export GEM_HOME="$(pwd)/.gems"
-    export PATH="$(ruby -e 'puts Gem.bindir'):$PATH"
-    export RUBYLIB="$GEM_HOME"
-    gem install --no-document bundler geminabox overcommit
-    $GEM_HOME/bin/bundle install
-  '';
+  packages = with pkgs; [ cargo rustc rustfmt clippy git python3 ];
 }

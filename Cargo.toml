@@ -1,0 +1,37 @@
+[package]
+name = "syslog-exporter"
+version = "0.14.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+license = "MIT"
+description = "Prometheus metrics from rsyslog FIFO messages"
+
+[dependencies]
+axum = "0.8"
+clap = { version = "4", features = ["derive", "env"] }
+hyper-util = { version = "0.1", features = ["server-auto", "service", "tokio"] }
+nix = { version = "0.31", features = ["fs", "poll", "signal"] }
+prometheus = { version = "0.14", default-features = false }
+regex = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+time = { version = "0.3", features = ["parsing"] }
+tokio = { version = "1", features = ["rt-multi-thread", "net", "signal", "sync", "time", "macros"] }
+tower-http = { version = "0.6", features = ["compression-gzip", "timeout", "limit"] }
+
+[dev-dependencies]
+flate2 = "1"
+tempfile = "3"
+tower = { version = "0.5", features = ["util"] }
+
+[profile.dev]
+debug = 0
+incremental = false
+
+[profile.test]
+debug = 0
+incremental = false
+
+[profile.release]
+strip = true
