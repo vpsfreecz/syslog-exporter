@@ -83,3 +83,13 @@ marker waits share the explicit deadline. Cleanup resumes and terminates only
 owned child processes, preserving final metrics, diagnostics and compact JSON
 before disposable fixture files are removed. Long rate sweeps, restart scenarios
 and production-envelope acceptance are separate verification work.
+
+## Sandboxed dependency checks
+
+`scripts/check --release` uses locked, offline release-mode Clippy and tests.
+The default Nix package runs that same shared entry point inside an ordinary
+build sandbox, including the Python and real-Git updater fixtures. Ordinary
+`scripts/check` and developer hooks keep their normal local behavior. The
+[weekly updater](maintenance.md) resolves and audits with trusted tooling, then
+uses this sandboxed check before any bot commit or push. No recurring benchmark
+campaign is part of dependency updates.

@@ -47,4 +47,5 @@ CI uses the pinned toolchain and the same check entry point.
 
 - [Configuration, line protocol and metric behavior](docs/reference.md)
 - [Tests, fixtures and finite performance measurements](docs/verification.md)
+- [Weekly Cargo updates and recovery](docs/maintenance.md)
 - [Pinned Ruby/rsyslog fixture provenance](tests/fixtures/README.md)

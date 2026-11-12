@@ -8,6 +8,12 @@
       systems = [ "x86_64-linux" "aarch64-linux" ];
     in
     {
+      packages = nixpkgs.lib.genAttrs systems (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        { default = pkgs.callPackage ./package.nix { }; });
+
       devShells = nixpkgs.lib.genAttrs systems (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
@@ -15,7 +21,7 @@
         {
           default = pkgs.mkShell {
             name = "syslog-exporter";
-            packages = with pkgs; [ cargo rustc rustfmt clippy git python3 ];
+            packages = with pkgs; [ cargo rustc rustfmt clippy git python3 cargo-audit ];
           };
         });
     };

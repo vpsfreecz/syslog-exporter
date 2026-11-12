@@ -6,15 +6,22 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: rust-${{ github.workflow }}-${{ github.ref }}
+  group: rust-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: Install Rust
-        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy
-      - name: Format, lint and test
-        run: scripts/check
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086 # v31.11.5
+        with:
+          extra_nix_config: |
+            sandbox = true
+            sandbox-fallback = false
+      - name: Sandboxed release and shared checks
+        run: |
+          nix config show --json | python3 -c 'import json,sys; c=json.load(sys.stdin); print({k:c[k]["value"] for k in ("sandbox", "sandbox-fallback")}); assert c["sandbox"]["value"] is True and c["sandbox-fallback"]["value"] is False'
+          nix build --no-write-lock-file --no-link --print-build-logs --option sandbox true --option sandbox-fallback false .#default

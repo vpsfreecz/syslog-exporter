@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-python3 -m py_compile scripts/benchmark.py
+flags=(--locked)
+case "${1:-}" in
+  "") ;;
+  --release) flags+=(--release --offline) ;;
+  *) echo "Usage: scripts/check [--release]" >&2; exit 2 ;;
+esac
+python3 -m py_compile scripts/benchmark.py tests/update_workflow.py
 python3 scripts/benchmark.py --help >/dev/null
+python3 tests/update_workflow.py
 cargo fmt --all -- --check
-cargo clippy --locked --all-targets -- -D warnings
-cargo test --locked
+cargo clippy "${flags[@]}" --all-targets -- -D warnings
+cargo test "${flags[@]}"
