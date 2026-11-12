@@ -23,7 +23,7 @@ errors and handles SIGTERM/SIGINT with bounded shutdown.
 Development uses the same toolchain as the configuration package:
 
 ```sh
-nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/718f670e845328e9c2cecdd832835712b2cbd065.tar.gz
+nix develop
 # Inside the shell:
 # Standalone clones only (see linked worktrees below):
 git config --local core.hooksPath .githooks
@@ -39,7 +39,10 @@ git -c core.hooksPath="$PWD/.githooks" push origin HEAD
 ```
 
 The hook runs formatting checks, Clippy and tests, and never stages or rewrites
-files. Cargo.lock is committed. `shell.nix` installs nothing on shell entry.
+files. `Cargo.lock` and `flake.lock` are committed. The flake pins nixpkgs to
+`718f670e845328e9c2cecdd832835712b2cbd065` and provides a development shell for
+`x86_64-linux` and `aarch64-linux`. Entering it does not install Git hooks.
+Run checks without an interactive shell with `nix develop -c scripts/check`.
 CI uses the pinned toolchain and the same check entry point.
 
 - [Configuration, line protocol and metric behavior](docs/reference.md)
